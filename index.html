@@ -4,35 +4,41 @@
   <meta charset="UTF-8" />
   <title>Brian Ward | Software & Automation Consultation</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css?family=Segoe+UI:400,600&display=swap" rel="stylesheet" />
   <style>
-    /* --- Global Reset & Font --- */
-    * {
+    /* Global Reset & Font */
+    *, *::before, *::after {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
     body {
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      color: #333;
-      background: #f7f7f7;
+      color: #e0e0e0;
+      background: #121212;
       line-height: 1.6;
+      scroll-behavior: smooth;
     }
     a {
       text-decoration: none;
       color: inherit;
     }
-
-    /* --- Header & Navigation --- */
+    
+    /* Sticky Header */
     header {
-      background: #24292f; /* GitHub-like dark gray */
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #1e1e1e;
       padding: 1rem 2rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      transition: background 0.3s ease;
     }
     header .logo {
-      font-size: 1.25rem;
-      color: #ffffff;
+      font-size: 1.5rem;
+      color: #e0e0e0;
       font-weight: 600;
     }
     nav ul {
@@ -41,40 +47,77 @@
       gap: 1.5rem;
     }
     nav ul li a {
-      color: #ffffff;
+      color: #e0e0e0;
       font-weight: 500;
       transition: color 0.3s ease;
     }
     nav ul li a:hover {
-      color: #ffa500; /* highlight on hover */
+      color: #ffa500;
     }
-
-    /* --- Hero Section --- */
+    
+    /* Mobile Navigation */
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        background: #1e1e1e;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        display: none;
+      }
+      nav ul.active {
+        display: flex;
+      }
+      nav .menu-toggle {
+        display: block;
+        background: none;
+        border: none;
+        color: #e0e0e0;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+    }
+    @media (min-width: 769px) {
+      nav .menu-toggle {
+        display: none;
+      }
+    }
+    
+    /* Hero Section */
     .hero {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 3rem 1rem;
-      background: linear-gradient(to right, #f9f9f9, #e7e9ec);
+      padding: 4rem 1rem;
+      background: linear-gradient(135deg, #1e1e1e 0%, #333 100%);
     }
     .hero h1 {
-      font-size: 2.5rem;
+      font-size: 3rem;
       margin-bottom: 1rem;
-      color: #24292f;
+      color: #ffa500;
+    }
+    /* Highlight style for dynamic text */
+    #typed-text {
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .highlight {
+      background-color: #ffa500;
+      color: #121212;
     }
     .hero p {
       max-width: 700px;
       margin-bottom: 2rem;
-      color: #555;
-      font-size: 1.1rem;
+      color: #ccc;
+      font-size: 1.2rem;
     }
     .hero .cta {
       display: inline-block;
-      padding: 0.75rem 1.5rem;
+      padding: 0.75rem 2rem;
       background: #ffa500;
-      color: #fff;
+      color: #121212;
       font-weight: 600;
       border-radius: 4px;
       transition: background 0.3s ease;
@@ -82,40 +125,33 @@
     .hero .cta:hover {
       background: #ff8700;
     }
-
-    /* --- About Section --- */
-    .about {
-      max-width: 1000px;
-      margin: 2rem auto;
-      padding: 0 1rem;
+    
+    /* Section Styles */
+    section {
+      padding: 3rem 1rem;
     }
-    .about h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: #24292f;
+    .section-title {
+      font-size: 2.5rem;
+      color: #ffa500;
       text-align: center;
+      margin-bottom: 2rem;
     }
-    .about .content {
+    .content {
+      max-width: 1000px;
+      margin: 0 auto;
       display: grid;
       grid-template-columns: 1fr;
       gap: 1.5rem;
     }
-    .about .content p {
-      color: #555;
-      font-size: 1rem;
+    .content p {
+      color: #ccc;
+      font-size: 1.1rem;
       line-height: 1.6;
     }
-
-    /* --- Services Section --- */
+    
+    /* Services Section */
     .services {
-      background: #ffffff;
-      padding: 2rem 1rem;
-    }
-    .services h2 {
-      font-size: 2rem;
-      color: #24292f;
-      text-align: center;
-      margin-bottom: 1.5rem;
+      background: #1e1e1e;
     }
     .service-list {
       max-width: 1000px;
@@ -125,271 +161,303 @@
       gap: 1.5rem;
     }
     .service-item {
-      background: #f1f1f1;
-      padding: 1rem;
-      border-radius: 6px;
-      transition: box-shadow 0.3s ease;
+      background: #242424;
+      padding: 1.5rem;
+      border-radius: 8px;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
     }
     .service-item:hover {
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      transform: translateY(-5px);
     }
     .service-item h3 {
-      margin-bottom: 0.5rem;
-      color: #24292f;
-      font-size: 1.2rem;
+      margin-bottom: 0.75rem;
+      color: #ffa500;
+      font-size: 1.3rem;
     }
     .service-item p {
-      color: #666;
-      font-size: 0.95rem;
+      color: #ccc;
+      font-size: 1rem;
       line-height: 1.5;
     }
-
-    /* --- Experience & Skills Section --- */
+    
+    /* Experience Section */
     .experience {
       max-width: 1000px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
-    .experience h2 {
-      font-size: 2rem;
-      color: #24292f;
-      text-align: center;
-      margin-bottom: 1.5rem;
+      margin: 0 auto;
     }
     .experience-details {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 1rem;
+      gap: 1.5rem;
     }
     .exp-item {
-      background: #ffffff;
-      border-radius: 6px;
-      padding: 1rem;
+      background: #242424;
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: box-shadow 0.3s ease;
+    }
+    .exp-item:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     }
     .exp-item h3 {
-      margin-bottom: 0.3rem;
-      font-size: 1.1rem;
-      color: #333;
+      margin-bottom: 0.5rem;
+      font-size: 1.3rem;
+      color: #ffa500;
     }
     .exp-item p {
-      color: #555;
-      font-size: 0.95rem;
-      line-height: 1.5;
+      color: #ccc;
+      font-size: 1rem;
+      line-height: 1.6;
     }
     .skills-list {
-      margin-top: 0.5rem;
+      margin-top: 1rem;
       display: flex;
       flex-wrap: wrap;
-      gap: 0.4rem;
+      gap: 0.5rem;
     }
     .skill {
       background: #ffa500;
-      color: #fff;
-      padding: 0.3rem 0.5rem;
+      color: #121212;
+      padding: 0.4rem 0.8rem;
       border-radius: 4px;
       font-size: 0.85rem;
       font-weight: 600;
     }
-
-    /* --- Contact Section --- */
+    
+    /* Contact Section */
     .contact {
-      background: #24292f;
-      color: #ffffff;
-      padding: 2rem 1rem;
+      background: #1e1e1e;
+      color: #ccc;
       text-align: center;
     }
-    .contact h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-    .contact form {
-      max-width: 600px;
+    .contact .google-form-wrapper {
+      max-width: 640px;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1rem;
+      padding: 1rem;
     }
-    .contact label {
-      text-align: left;
-      font-size: 0.9rem;
-      color: #ddd;
+    .contact iframe {
+      width: 100%;
+      height: 1195px;
+      border: 0;
     }
-    .contact input[type="text"],
-    .contact input[type="email"],
-    .contact textarea {
-      padding: 0.75rem;
-      border: 1px solid #555;
-      border-radius: 4px;
-      outline: none;
-      color: #333;
-    }
-    .contact button {
-      background: #ffa500;
-      color: #fff;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      font-size: 1rem;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    .contact button:hover {
-      background: #ff8700;
-    }
-
-    /* --- Footer --- */
+    
+    /* Footer */
     footer {
-      background: #333;
-      color: #bbb;
+      background: #1e1e1e;
+      color: #777;
       text-align: center;
       padding: 1rem;
       font-size: 0.85rem;
     }
   </style>
 </head>
-<body>
-
-  <!-- Header / Nav -->
+<body class="dark-mode">
+  <!-- Header -->
   <header>
     <div class="logo">Brian Ward</div>
     <nav>
+      <button class="menu-toggle" aria-label="Toggle Navigation">&#9776;</button>
       <ul>
         <li><a href="#about">About</a></li>
         <li><a href="#services">Services</a></li>
         <li><a href="#experience">Experience</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#contact">Get in Touch</a></li>
       </ul>
     </nav>
   </header>
-
-  <!-- Hero Section -->
-  <section class="hero">
-    <h1>Software & Automation Consulting</h1>
-    <p>Developing automation and systems that save people time. 
-       Turning individuals into Superhumans by enhancing their capabilities.</p>
-    <a class="cta" href="#contact">Get in Touch</a>
-  </section>
-
-  <!-- About Section -->
-  <section class="about" id="about">
-    <h2>About Brian Ward</h2>
-    <div class="content">
+  
+  <!-- Main Content -->
+  <main>
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+      <!-- The dynamic header: the span will be updated by the script -->
+      <h1><span id="typed-text"></span>|</h1>
+      <h2>Consulting</h2>
       <p>
-        As a dedicated System Administrator with years of experience at Superhuman Prospecting, 
-        I specialize in developing and maintaining IT systems that enhance efficiency and drive 
-        positive change. My core mission: connect people and technology to create seamless, 
-        productive environments. With proficiency in process automation, programming, SQL, JavaScript,
-        and the Google Cloud Platform (GCP), I deliver innovative solutions that streamline 
-        operations and help users perform at their best.
+        Developing automation and systems that save time.
+        Empowering individuals with cutting-edge technology.
       </p>
-      <p>
-        I take pride in leading projects, implementing cutting-edge approaches, and guiding teams 
-        to adopt new technologies with minimal friction. Whether you need robust system architecture 
-        or swift troubleshooting, I'm here to help you save time, optimize workflows, and transform 
-        your organization.
-      </p>
-    </div>
-  </section>
-
-  <!-- Services Section -->
-  <section class="services" id="services">
-    <h2>Services</h2>
-    <div class="service-list">
-      <div class="service-item">
-        <h3>System Administration</h3>
-        <p>Efficient setup and maintenance of servers, operating systems, and networks to ensure 
-           uninterrupted business operations.</p>
-      </div>
-      <div class="service-item">
-        <h3>Process Automation</h3>
-        <p>Automating repetitive tasks and building custom workflows to maximize productivity 
-           and reduce human error.</p>
-      </div>
-      <div class="service-item">
-        <h3>Programming & Scripting</h3>
-        <p>Custom scripts and software solutions built to handle unique business needs using 
-           Python, JavaScript, SQL, and more.</p>
-      </div>
-      <div class="service-item">
-        <h3>Data Analytics & Visualization</h3>
-        <p>Transform raw data into meaningful insights with tools like GCP, Python, and 
-           advanced analytics platforms.</p>
-      </div>
-      <div class="service-item">
-        <h3>Technical Consulting</h3>
-        <p>Comprehensive advisory services to upgrade infrastructure, improve cybersecurity, 
-           or integrate cloud-based solutions.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Experience & Skills Section -->
-  <section class="experience" id="experience">
-    <h2>Experience & Skills</h2>
-    <div class="experience-details">
-
-      <!-- Example Experience Item -->
-      <div class="exp-item">
-        <h3>System Administrator @ Superhuman Prospecting</h3>
+      <a class="cta" href="#contact">Get in Touch</a>
+    </section>
+    
+    <!-- About Section -->
+    <section class="about" id="about">
+      <h2 class="section-title">About Brian Ward</h2>
+      <div class="content">
         <p>
-          Managing IT systems, process automation, and technical support to ensure 
-          smooth and efficient operations. I utilize programming, SQL, JavaScript, 
-          and GCP for data-driven insights and innovative solutions.
+          With years of experience as a System Administrator at Superhuman Prospecting,
+          Brian Ward specializes in developing and maintaining IT systems that drive efficiency and innovation.
+          His mission is to connect people with technology, creating seamless, productive environments.
         </p>
-        <div class="skills-list">
-          <span class="skill">System Administration</span>
-          <span class="skill">Process Automation</span>
-          <span class="skill">GCP</span>
-          <span class="skill">Programming</span>
-          <span class="skill">SQL</span>
-          <span class="skill">JavaScript</span>
+        <p>
+          Proficient in process automation, programming, SQL, JavaScript, and Google Cloud Platform,
+          he delivers innovative solutions that streamline operations and empower organizations to excel.
+        </p>
+      </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section class="services" id="services">
+      <h2 class="section-title">Services</h2>
+      <div class="service-list">
+        <div class="service-item">
+          <h3>System Administration</h3>
+          <p>
+            Efficient setup and maintenance of servers, operating systems, and networks to ensure uninterrupted business operations.
+          </p>
+        </div>
+        <div class="service-item">
+          <h3>Process Automation</h3>
+          <p>
+            Automating repetitive tasks and building custom workflows to maximize productivity and reduce human error.
+          </p>
+        </div>
+        <div class="service-item">
+          <h3>Programming &amp; Scripting</h3>
+          <p>
+            Crafting custom scripts and software solutions to address unique business needs using Python, JavaScript, SQL, and more.
+          </p>
+        </div>
+        <div class="service-item">
+          <h3>Data Analytics &amp; Visualization</h3>
+          <p>
+            Transforming raw data into actionable insights with advanced analytics and visualization tools.
+          </p>
+        </div>
+        <div class="service-item">
+          <h3>Technical Consulting</h3>
+          <p>
+            Offering comprehensive advisory services to modernize infrastructure, enhance cybersecurity, and integrate cloud solutions.
+          </p>
         </div>
       </div>
-
-      <div class="exp-item">
-        <h3>Lead Systems Analyst & Project Management</h3>
-        <p>
-          Oversaw the development and deployment of projects, collaborating across 
-          teams to ensure seamless implementation and efficient technical processes.
-        </p>
-        <div class="skills-list">
-          <span class="skill">Data Analytics</span>
-          <span class="skill">Project Leadership</span>
-          <span class="skill">Team Coordination</span>
+    </section>
+    
+    <!-- Experience Section -->
+    <section class="experience" id="experience">
+      <h2 class="section-title">Experience &amp; Skills</h2>
+      <div class="experience-details">
+        <div class="exp-item">
+          <h3>System Administrator @ Superhuman Prospecting</h3>
+          <p>
+            Managing IT systems, automating processes, and providing technical support to ensure smooth operations.
+            Utilizing programming, SQL, JavaScript, and GCP for innovative, data-driven solutions.
+          </p>
+          <div class="skills-list">
+            <span class="skill">System Administration</span>
+            <span class="skill">Process Automation</span>
+            <span class="skill">GCP</span>
+            <span class="skill">Programming</span>
+            <span class="skill">SQL</span>
+            <span class="skill">JavaScript</span>
+          </div>
+        </div>
+        <div class="exp-item">
+          <h3>Lead Systems Analyst &amp; Project Manager</h3>
+          <p>
+            Led project development and deployment, ensuring seamless collaboration and efficient technical processes.
+          </p>
+          <div class="skills-list">
+            <span class="skill">Data Analytics</span>
+            <span class="skill">Project Leadership</span>
+            <span class="skill">Team Coordination</span>
+          </div>
         </div>
       </div>
-
-      <!-- Add more items as needed or relevant from your LinkedIn details -->
-
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section class="contact" id="contact">
-    <h2>Contact Me</h2>
-    <p>Interested in boosting efficiency and embracing automation? Let’s connect!</p>
-    <form>
-      <label for="name">Name</label>
-      <input id="name" type="text" name="name" placeholder="Your Name" required />
-
-      <label for="email">Email</label>
-      <input id="email" type="email" name="email" placeholder="you@example.com" required />
-
-      <label for="message">Message</label>
-      <textarea id="message" name="message" rows="5" placeholder="How can I help you?" required></textarea>
-
-      <button type="submit">Send Message</button>
-    </form>
-  </section>
-
+    </section>
+    
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+      <h2 class="section-title">Get in touch</h2>
+      <p>
+        If you're serious about taking your processes to the next level, please fill out the form below.
+      </p>
+      <div class="google-form-wrapper">
+        <!-- Embedded Google Form (renamed within the form editor to avoid duplication) -->
+        <iframe 
+          src="https://docs.google.com/forms/d/e/1FAIpQLSdlmxuVyWupv-CpzJwVxR5Gtd84ASy7FyMVMJaZ2KVAtemWiQ/viewform?embedded=true" 
+          frameborder="0" 
+          marginheight="0" 
+          marginwidth="0"
+        >
+          Loading…
+        </iframe>
+      </div>
+    </section>
+  </main>
+  
   <!-- Footer -->
   <footer>
     <p>&copy; <span id="year"></span> Brian Ward. All Rights Reserved.</p>
   </footer>
-
+  
   <script>
     // Auto-update footer year
     document.getElementById('year').textContent = new Date().getFullYear();
+    
+    // Mobile Navigation Toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navUl = document.querySelector('nav ul');
+    menuToggle.addEventListener('click', () => {
+      navUl.classList.toggle('active');
+    });
+    
+    // Dynamic Type Effect for the Header
+    const services = [
+      "System Administration",
+      "Process Automation",
+      "Programming & Scripting",
+      "Data Analytics",
+      "Technical"
+    ];
+    
+    const typedTextElement = document.getElementById('typed-text');
+    let serviceIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    
+    // Control speeds (in milliseconds)
+    const typeSpeed = 100;
+    const deleteSpeed = 50;
+    const pauseTime = 2000;
+    const highlightTime = 500;
+    
+    function type() {
+      const currentService = services[serviceIndex];
+      if (!isDeleting) {
+        // Type one character at a time
+        typedTextElement.textContent = currentService.substring(0, charIndex + 1);
+        charIndex++;
+        if (charIndex === currentService.length) {
+          // Finished typing: pause then add highlight before deletion
+          setTimeout(() => {
+            typedTextElement.classList.add('highlight');
+            setTimeout(() => {
+              typedTextElement.classList.remove('highlight');
+              isDeleting = true;
+              setTimeout(type, deleteSpeed);
+            }, highlightTime);
+          }, pauseTime);
+        } else {
+          setTimeout(type, typeSpeed);
+        }
+      } else {
+        // Delete one character at a time
+        typedTextElement.textContent = currentService.substring(0, charIndex - 1);
+        charIndex--;
+        if (charIndex === 0) {
+          isDeleting = false;
+          serviceIndex = (serviceIndex + 1) % services.length;
+          setTimeout(type, typeSpeed);
+        } else {
+          setTimeout(type, deleteSpeed);
+        }
+      }
+    }
+    
+    // Start the dynamic type effect
+    type();
   </script>
 </body>
 </html>
