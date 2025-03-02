@@ -54,6 +54,16 @@
     nav ul li a:hover {
       color: #ffa500;
     }
+    .cursor {
+      animation: blink 1s step-start infinite;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
     
     /* Mobile Navigation */
     @media (max-width: 768px) {
@@ -84,20 +94,74 @@
       }
     }
     
-    /* Hero Section */
-    .hero {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 4rem 1rem;
-      background: linear-gradient(135deg, #1e1e1e 0%, #333 100%);
-    }
+ /* Hero Section with dynamic gradient */
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 4rem 1rem;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(135deg, #1e1e1e 0%, #333 100%);
+  animation: gradientMove 6s ease-in-out infinite;
+  z-index: -1;
+}
+
+@keyframes gradientMove {
+  0% { transform: translate(0%, 0%) rotate(0deg); }
+  25% { transform: translate(15%, -15%) rotate(2deg); }
+  75% { transform: translate(-15%, 15%) rotate(-2deg); }
+  100% { transform: translate(0%, 0%) rotate(0deg); }
+}
+
+/* Mouse Trail Segment Effect */
+.mouse-trail-segment {
+  position: fixed;
+  pointer-events: none;
+  background-color: rgba(255, 165, 0, 0.8);
+  transform-origin: 0 50%;
+  animation: fadeTrail 0.8s forwards;
+  z-index: 10000;
+}
+
+@keyframes fadeTrail {
+  from {
+    opacity: 1;
+    height: 4px; /* initial thickness */
+  }
+  to {
+    opacity: 0;
+    height: 0;
+  }
+}
+
     .hero h1 {
       font-size: 3rem;
       margin-bottom: 1rem;
       color: #ffa500;
+    }
+    .profile-image {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .profile-image img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #ffa500; /* Optional: adds a border similar to GitHub's style */
     }
     /* Highlight style for dynamic text */
     #typed-text {
@@ -272,8 +336,9 @@
     <!-- Hero Section -->
     <section class="hero" id="hero">
       <!-- The dynamic header: the span will be updated by the script -->
-      <h1><span id="typed-text"></span>|</h1>
-      <h2>Consulting</h2>
+      <h1><span id="typed-text"></span><span class="cursor">|</span></h1>
+      
+      <h1>Consulting</h1>
       <p>
         Developing automation and systems that save time.
         Empowering individuals with cutting-edge technology.
@@ -284,6 +349,9 @@
     <!-- About Section -->
     <section class="about" id="about">
       <h2 class="section-title">About Brian Ward</h2>
+      <div class="profile-image">
+        <img src="https://avatars.githubusercontent.com/u/9090109" alt="Brian Ward Profile Image">
+      </div>
       <div class="content">
         <p>
           With years of experience as a System Administrator at Superhuman Prospecting,
@@ -296,6 +364,7 @@
         </p>
       </div>
     </section>
+
     
     <!-- Services Section -->
     <section class="services" id="services">
@@ -392,72 +461,84 @@
     <p>&copy; <span id="year"></span> Brian Ward. All Rights Reserved.</p>
   </footer>
   
-  <script>
-    // Auto-update footer year
-    document.getElementById('year').textContent = new Date().getFullYear();
-    
-    // Mobile Navigation Toggle
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navUl = document.querySelector('nav ul');
-    menuToggle.addEventListener('click', () => {
-      navUl.classList.toggle('active');
-    });
-    
-    // Dynamic Type Effect for the Header
-    const services = [
-      "System Administration",
-      "Process Automation",
-      "Programming & Scripting",
-      "Data Analytics",
-      "Technical"
-    ];
-    
-    const typedTextElement = document.getElementById('typed-text');
-    let serviceIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-    
-    // Control speeds (in milliseconds)
-    const typeSpeed = 100;
-    const deleteSpeed = 50;
-    const pauseTime = 2000;
-    const highlightTime = 500;
-    
-    function type() {
-      const currentService = services[serviceIndex];
-      if (!isDeleting) {
-        // Type one character at a time
-        typedTextElement.textContent = currentService.substring(0, charIndex + 1);
-        charIndex++;
-        if (charIndex === currentService.length) {
-          // Finished typing: pause then add highlight before deletion
-          setTimeout(() => {
-            typedTextElement.classList.add('highlight');
-            setTimeout(() => {
-              typedTextElement.classList.remove('highlight');
-              isDeleting = true;
-              setTimeout(type, deleteSpeed);
-            }, highlightTime);
-          }, pauseTime);
-        } else {
-          setTimeout(type, typeSpeed);
-        }
-      } else {
-        // Delete one character at a time
-        typedTextElement.textContent = currentService.substring(0, charIndex - 1);
-        charIndex--;
-        if (charIndex === 0) {
-          isDeleting = false;
+<script>
+  // Dynamic Type Effect for the Header
+  const services = [
+    "System Administration",
+    "Process Automation",
+    "Programming & Scripting",
+    "Data Analytics",
+    "Technical"
+  ];
+
+  const typedTextElement = document.getElementById('typed-text');
+  let serviceIndex = 0;
+  let charIndex = 0;
+
+  // Control speeds (in milliseconds)
+  const typeSpeed = 100;
+  const pauseTime = 2000;
+  const highlightTime = 500;
+
+  function type() {
+    const currentService = services[serviceIndex];
+    if (charIndex < currentService.length) {
+      // Type one character at a time
+      typedTextElement.textContent = currentService.substring(0, charIndex + 1);
+      charIndex++;
+      setTimeout(type, typeSpeed);
+    } else {
+      // Finished typing: pause, highlight, then delete the whole text at once
+      setTimeout(() => {
+        typedTextElement.classList.add('highlight');
+        setTimeout(() => {
+          typedTextElement.classList.remove('highlight');
+          // Delete entire text instantly
+          typedTextElement.textContent = "";
+          // Reset indices for next service
+          charIndex = 0;
           serviceIndex = (serviceIndex + 1) % services.length;
           setTimeout(type, typeSpeed);
-        } else {
-          setTimeout(type, deleteSpeed);
-        }
-      }
+        }, highlightTime);
+      }, pauseTime);
     }
-    
-    // Start the dynamic type effect
-    type();
-  </script>
+  }
+
+  // Start the dynamic type effect
+  type();
+  let lastPos = null;
+  document.addEventListener('mousemove', function(e) {
+    if (lastPos) {
+      const x1 = lastPos.x;
+      const y1 = lastPos.y;
+      const x2 = e.clientX;
+      const y2 = e.clientY;
+      const dx = x2 - x1;
+      const dy = y2 - y1;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+        lastPos = { x: x2, y: y2 };
+      const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+      
+      const trail = document.createElement('div');
+      trail.classList.add('mouse-trail-segment');
+      // Position the segment at the starting point
+      trail.style.left = x1 + 'px';
+      trail.style.top = y1 + 'px';
+      // Set the width to the distance between points
+      trail.style.width = distance + 'px';
+      // Set the initial thickness
+      trail.style.height = '2px';
+      // Rotate the element to align with the mouse movement
+      trail.style.transform = `rotate(${angle}deg)`;
+      
+      document.body.appendChild(trail);
+      // Remove the element after the animation completes (0.8s)
+      setTimeout(() => {
+        trail.remove();
+      }, 800);
+    }
+    lastPos = { x: e.clientX, y: e.clientY };
+  });
+</script>
 </body>
 </html>
