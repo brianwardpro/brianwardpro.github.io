@@ -5,321 +5,17 @@
   <title>Brian Ward | Software & Automation Consultation</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css?family=Segoe+UI:400,600&display=swap" rel="stylesheet" />
-  <style>
-    /* Global Reset & Font */
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      color: #e0e0e0;
-      background: #121212;
-      line-height: 1.6;
-      scroll-behavior: smooth;
-    }
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-    
-    /* Sticky Header */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: #1e1e1e;
-      padding: 1rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      transition: background 0.3s ease;
-    }
-    header .logo {
-      font-size: 1.5rem;
-      color: #e0e0e0;
-      font-weight: 600;
-    }
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 1.5rem;
-    }
-    nav ul li a {
-      color: #e0e0e0;
-      font-weight: 500;
-      transition: color 0.3s ease;
-    }
-    nav ul li a:hover {
-      color: #ffa500;
-    }
-    .cursor {
-      animation: blink 1s step-start infinite;
-    }
-
-    @keyframes blink {
-      50% {
-        opacity: 0;
-      }
-    }
-
-    
-    /* Mobile Navigation */
-    @media (max-width: 768px) {
-      nav ul {
-        flex-direction: column;
-        background: #1e1e1e;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        display: none;
-      }
-      nav ul.active {
-        display: flex;
-      }
-      nav .menu-toggle {
-        display: block;
-        background: none;
-        border: none;
-        color: #e0e0e0;
-        font-size: 1.5rem;
-        cursor: pointer;
-      }
-    }
-    @media (min-width: 769px) {
-      nav .menu-toggle {
-        display: none;
-      }
-    }
-    
- /* Hero Section with dynamic gradient */
-.hero {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 4rem 1rem;
-  overflow: hidden;
-}
-
-.hero::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(135deg, #1e1e1e 0%, #333 100%);
-  animation: gradientMove 6s ease-in-out infinite;
-  z-index: -1;
-}
-
-@keyframes gradientMove {
-  0% { transform: translate(0%, 0%) rotate(0deg); }
-  25% { transform: translate(15%, -15%) rotate(2deg); }
-  75% { transform: translate(-15%, 15%) rotate(-2deg); }
-  100% { transform: translate(0%, 0%) rotate(0deg); }
-}
-
-/* Mouse Trail Segment Effect */
-.mouse-trail-segment {
-  position: fixed;
-  pointer-events: none;
-  background-color: rgba(255, 165, 0, 0.8);
-  transform-origin: 0 50%;
-  animation: fadeTrail 0.8s forwards;
-  z-index: 10000;
-}
-
-@keyframes fadeTrail {
-  from {
-    opacity: 1;
-    height: 4px; /* initial thickness */
-  }
-  to {
-    opacity: 0;
-    height: 0;
-  }
-}
-
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      color: #ffa500;
-    }
-    .profile-image {
-      text-align: center;
-      margin-bottom: 1rem;
-    }
-
-    .profile-image img {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid #ffa500; /* Optional: adds a border similar to GitHub's style */
-    }
-    /* Highlight style for dynamic text */
-    #typed-text {
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-    .highlight {
-      background-color: #ffa500;
-      color: #121212;
-    }
-    .hero p {
-      max-width: 700px;
-      margin-bottom: 2rem;
-      color: #ccc;
-      font-size: 1.2rem;
-    }
-    .hero .cta {
-      display: inline-block;
-      padding: 0.75rem 2rem;
-      background: #ffa500;
-      color: #121212;
-      font-weight: 600;
-      border-radius: 4px;
-      transition: background 0.3s ease;
-    }
-    .hero .cta:hover {
-      background: #ff8700;
-    }
-    
-    /* Section Styles */
-    section {
-      padding: 3rem 1rem;
-    }
-    .section-title {
-      font-size: 2.5rem;
-      color: #ffa500;
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    .content {
-      max-width: 1000px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-    .content p {
-      color: #ccc;
-      font-size: 1.1rem;
-      line-height: 1.6;
-    }
-    
-    /* Services Section */
-    .services {
-      background: #1e1e1e;
-    }
-    .service-list {
-      max-width: 1000px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-    }
-    .service-item {
-      background: #242424;
-      padding: 1.5rem;
-      border-radius: 8px;
-      transition: box-shadow 0.3s ease, transform 0.3s ease;
-    }
-    .service-item:hover {
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-      transform: translateY(-5px);
-    }
-    .service-item h3 {
-      margin-bottom: 0.75rem;
-      color: #ffa500;
-      font-size: 1.3rem;
-    }
-    .service-item p {
-      color: #ccc;
-      font-size: 1rem;
-      line-height: 1.5;
-    }
-    
-    /* Experience Section */
-    .experience {
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-    .experience-details {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-    .exp-item {
-      background: #242424;
-      border-radius: 8px;
-      padding: 1.5rem;
-      transition: box-shadow 0.3s ease;
-    }
-    .exp-item:hover {
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-    }
-    .exp-item h3 {
-      margin-bottom: 0.5rem;
-      font-size: 1.3rem;
-      color: #ffa500;
-    }
-    .exp-item p {
-      color: #ccc;
-      font-size: 1rem;
-      line-height: 1.6;
-    }
-    .skills-list {
-      margin-top: 1rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-    .skill {
-      background: #ffa500;
-      color: #121212;
-      padding: 0.4rem 0.8rem;
-      border-radius: 4px;
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-    
-    /* Contact Section */
-    .contact {
-      background: #1e1e1e;
-      color: #ccc;
-      text-align: center;
-    }
-    .contact .google-form-wrapper {
-      max-width: 640px;
-      margin: 0 auto;
-      padding: 1rem;
-    }
-    .contact iframe {
-      width: 100%;
-      height: 1195px;
-      border: 0;
-    }
-    
-    /* Footer */
-    footer {
-      background: #1e1e1e;
-      color: #777;
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.85rem;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"></script>
 </head>
 <body class="dark-mode">
   <!-- Header -->
   <header>
-    <div class="logo">Brian Ward</div>
+    <div class="logo">
+      <!-- Geometric Logo Canvas inserted before the text -->
+      <canvas id="logoCanvas" width="60" height="60"></canvas>
+      Brian Ward
+    </div>
     <nav>
       <button class="menu-toggle" aria-label="Toggle Navigation">&#9776;</button>
       <ul>
@@ -335,9 +31,7 @@
   <main>
     <!-- Hero Section -->
     <section class="hero" id="hero">
-      <!-- The dynamic header: the span will be updated by the script -->
       <h1><span id="typed-text"></span><span class="cursor">|</span></h1>
-      
       <h1>Consulting</h1>
       <p>
         Developing automation and systems that save time.
@@ -364,7 +58,6 @@
         </p>
       </div>
     </section>
-
     
     <!-- Services Section -->
     <section class="services" id="services">
@@ -443,7 +136,6 @@
         If you're serious about taking your processes to the next level, please fill out the form below.
       </p>
       <div class="google-form-wrapper">
-        <!-- Embedded Google Form (renamed within the form editor to avoid duplication) -->
         <iframe 
           src="https://docs.google.com/forms/d/e/1FAIpQLSdlmxuVyWupv-CpzJwVxR5Gtd84ASy7FyMVMJaZ2KVAtemWiQ/viewform?embedded=true" 
           frameborder="0" 
@@ -460,85 +152,5 @@
   <footer>
     <p>&copy; <span id="year"></span> Brian Ward. All Rights Reserved.</p>
   </footer>
-  
-<script>
-  // Dynamic Type Effect for the Header
-  const services = [
-    "System Administration",
-    "Process Automation",
-    "Programming & Scripting",
-    "Data Analytics",
-    "Technical"
-  ];
-
-  const typedTextElement = document.getElementById('typed-text');
-  let serviceIndex = 0;
-  let charIndex = 0;
-
-  // Control speeds (in milliseconds)
-  const typeSpeed = 100;
-  const pauseTime = 2000;
-  const highlightTime = 500;
-
-  function type() {
-    const currentService = services[serviceIndex];
-    if (charIndex < currentService.length) {
-      // Type one character at a time
-      typedTextElement.textContent = currentService.substring(0, charIndex + 1);
-      charIndex++;
-      setTimeout(type, typeSpeed);
-    } else {
-      // Finished typing: pause, highlight, then delete the whole text at once
-      setTimeout(() => {
-        typedTextElement.classList.add('highlight');
-        setTimeout(() => {
-          typedTextElement.classList.remove('highlight');
-          // Delete entire text instantly
-          typedTextElement.textContent = "";
-          // Reset indices for next service
-          charIndex = 0;
-          serviceIndex = (serviceIndex + 1) % services.length;
-          setTimeout(type, typeSpeed);
-        }, highlightTime);
-      }, pauseTime);
-    }
-  }
-
-  // Start the dynamic type effect
-  type();
-  let lastPos = null;
-  document.addEventListener('mousemove', function(e) {
-    if (lastPos) {
-      const x1 = lastPos.x;
-      const y1 = lastPos.y;
-      const x2 = e.clientX;
-      const y2 = e.clientY;
-      const dx = x2 - x1;
-      const dy = y2 - y1;
-      const distance = Math.sqrt(dx * dx + dy * dy);
-        lastPos = { x: x2, y: y2 };
-      const angle = Math.atan2(dy, dx) * 180 / Math.PI;
-      
-      const trail = document.createElement('div');
-      trail.classList.add('mouse-trail-segment');
-      // Position the segment at the starting point
-      trail.style.left = x1 + 'px';
-      trail.style.top = y1 + 'px';
-      // Set the width to the distance between points
-      trail.style.width = distance + 'px';
-      // Set the initial thickness
-      trail.style.height = '2px';
-      // Rotate the element to align with the mouse movement
-      trail.style.transform = `rotate(${angle}deg)`;
-      
-      document.body.appendChild(trail);
-      // Remove the element after the animation completes (0.8s)
-      setTimeout(() => {
-        trail.remove();
-      }, 800);
-    }
-    lastPos = { x: e.clientX, y: e.clientY };
-  });
-</script>
 </body>
 </html>
