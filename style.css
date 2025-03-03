@@ -291,14 +291,10 @@ section {
   text-align: center;
 }
 .contact .google-form-wrapper {
+  display: none;
   max-width: 640px;
   margin: 0 auto;
   padding: 1rem;
-}
-.contact iframe {
-  width: 100%;
-  height: 1195px;
-  border: 0;
 }
 
 /* Footer */
@@ -309,19 +305,7 @@ footer {
   padding: 1rem;
   font-size: 0.85rem;
 }
-
-.contact-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: space-between;
-}
-
 .contact-form,
 .calendly-container {
   flex: 1 1 300px; /* Allows both columns to grow/shrink, with a minimum width */
-}
-
-.google-form-wrapper {
-  display: none;
 }
