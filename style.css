@@ -309,3 +309,19 @@ footer {
   padding: 1rem;
   font-size: 0.85rem;
 }
+
+.contact-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.contact-form,
+.calendly-container {
+  flex: 1 1 300px; /* Allows both columns to grow/shrink, with a minimum width */
+}
+
+.google-form-wrapper {
+  display: none;
+}
