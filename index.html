@@ -6,7 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://fonts.googleapis.com/css?family=Segoe+UI:400,600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+  <script src="script.js"></script>
+  <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
 </head>
 <body class="dark-mode">
   <!-- Header -->
@@ -130,22 +131,26 @@
     </section>
     
     <!-- Contact Section -->
-    <section class="contact" id="contact">
-      <h2 class="section-title">Get in touch</h2>
-      <p>
-        If you're serious about taking your processes to the next level, please fill out the form below.
-      </p>
-      <div class="google-form-wrapper">
-        <iframe 
-          src="https://docs.google.com/forms/d/e/1FAIpQLSdlmxuVyWupv-CpzJwVxR5Gtd84ASy7FyMVMJaZ2KVAtemWiQ/viewform?embedded=true" 
-          frameborder="0" 
-          marginheight="0" 
-          marginwidth="0"
-        >
-          Loading…
-        </iframe>
-      </div>
-    </section>
+ <section class="contact" id="contact">
+  <h2 class="section-title">Get in touch</h2>
+  <p>
+    If you're serious about taking your processes to the next level, please book a meeting directly below.
+  </p>
+  <div class="calendly-container">
+    <!-- Calendly Inline Widget -->
+    <div class="calendly-inline-widget" data-url="https://calendly.com/brianwardpro/30min" style="min-width:320px;height:630px;"></div>
+  </div>
+  <div class="google-form-wrapper">
+    <!-- Hidden Google Form (kept in the code for future use) -->
+    <iframe 
+      src="https://docs.google.com/forms/d/e/1FAIpQLSdlmxuVyWupv-CpzJwVxR5Gtd84ASy7FyMVMJaZ2KVAtemWiQ/viewform?embedded=true" 
+      frameborder="0" 
+      marginheight="0" 
+      marginwidth="0">
+      Loading…
+    </iframe>
+  </div>
+</section>
   </main>
   
   <!-- Footer -->
